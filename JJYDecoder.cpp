@@ -39,6 +39,7 @@ JJYDecoder::JJYDecoder(){
     digitalWrite(pinP, POWER_ON);
 
     wiringPiISR(pinTP, INT_EDGE_BOTH, &JJYDecoder::StaticEventCaller);
+    cout << "Start OK\n";
 }
 
 JJYDecoder::~JJYDecoder(){
