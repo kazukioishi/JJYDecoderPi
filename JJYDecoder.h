@@ -15,7 +15,7 @@ private:
     static int pinTP;
     static int pinP;
     struct timeCode_t {
-        unsigned long long code:60;
+        unsigned long long code = 60;
     };
     long timeHigh;
     long timeLow;
