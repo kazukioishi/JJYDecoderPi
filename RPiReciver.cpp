@@ -1,7 +1,9 @@
+#include <cstdio>
+using namespace std;
+#include <iostream>
 #include <signal.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include <errno.h>
 #include "JJYDecoder.h"
 

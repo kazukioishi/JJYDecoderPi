@@ -1,4 +1,6 @@
-#include <stdio.h>
+#include <cstdio>
+using namespace std;
+#include <iostream>
 #include <wiringPi.h>
 
 #ifndef JJYDECODER_L
