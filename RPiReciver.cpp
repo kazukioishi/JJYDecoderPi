@@ -22,6 +22,7 @@ int main(int argc, char* argv[]){
         }
         return 0;
     }catch (char *str) {
+        cout << "ERROR" << "\n";
         cout << str << "\n";
         return 1;
     }
