@@ -12,6 +12,7 @@ int JJYDecoder::pinF = 3;
 int JJYDecoder::pinTP = 13;
 int JJYDecoder::pinP = 2;
 JJYDecoder::JJYCODE JJYDecoder::previousCode;
+JJYDecoder DecoderSingleton;
 int JJYDecoder::currentPosition = 59;
 int JJYDecoder::sync = 0;
 struct JJYDecoder::timeCode_t JJYDecoder::timeCode;
