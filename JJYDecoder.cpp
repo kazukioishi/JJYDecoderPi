@@ -24,7 +24,7 @@ JJYDecoder::JJYDecoder(){
     highMax = 650;
     lowMin = 650;
     lowMax = 950;
-    DecoderSingleton = this;
+    DecoderSingleton = *this;
     //init GPIO
     if(wiringPiSetupGpio() == -1){
         throw "GPIO Initialize error.";
