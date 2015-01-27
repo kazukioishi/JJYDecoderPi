@@ -1,6 +1,7 @@
 #include <cstdio>
-using namespace std;
 #include <iostream>
+using namespace std;
+using namespace iostream;
 #include <signal.h>
 #include <unistd.h>
 #include <stdlib.h>
