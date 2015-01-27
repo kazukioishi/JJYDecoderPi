@@ -11,7 +11,7 @@
 int JJYDecoder::pinF = 3;
 int JJYDecoder::pinTP = 13;
 int JJYDecoder::pinP = 2;
-JJYCODE JJYDecoder::previousCode;
+JJYDecoder::JJYCODE JJYDecoder::previousCode;
 int JJYDecoder::currentPosition = 59;
 int JJYDecoder::sync = 0;
 struct JJYDecoder::timeCode_t JJYDecoder::timeCode;
@@ -69,7 +69,7 @@ int JJYDecoder::getBits(unsigned char value) {
     return (value & 0x0f) + ((value >> 4) & 0x0f);
 }
 
-void JJYDecoder::intChange() {
+void *JJYDecoder::intChange() {
   char buf[128];
   JJYCODE currentCode;
   int interval;
@@ -110,7 +110,7 @@ void JJYDecoder::intChange() {
       // Position Marker
       case 51: case 41: case 31: case 21: case 11: case 1:
         if (currentCode != JJYCODE_M) {
-          println("Position Marker Error");
+          cout << "Position Marker Error\n";
           sync = 0;
         }
         break;
@@ -118,37 +118,36 @@ void JJYDecoder::intChange() {
       case 56: case 50: case 49: case 46: case 40: case 39: 
       case 36: case 26: case 25: case 5: case 4: case 3: case 2:
         if (currentCode != JJYCODE_L) {
-          println("Fixed 0 Error");
+          cout << "Fixed 0 Error";
           sync = 0;
         }
         break;
       // Parity of hour
       case 24:
         if (((getBits(timeCode.code >> 42) & 0xff) % 2) != ((timeCode.code >> 24) & 1)) {
-          println("Hour Parity Error");
+          cout << "Hour Parity Error";
           sync = 0;
         }
         break;
       // Parity of minute
       case 23:
         if (((getBits(timeCode.code >> 52) & 0xff) % 2) != ((timeCode.code >> 23) & 1)) {
-          println("Minute Parity Error");
+          cout << "Minute Parity Error";
           sync = 0;
         }
         break;
       case 0:
         sprintf(buf, "%02d:%02d, %03ddays, %2dyear, %1d Day of wees", 
           getHour(timeCode.code), getMinute(timeCode.code), getDay(timeCode.code), getYear(timeCode.code), getDayOfWeek(timeCode.code));
-        println(buf);
+        cout << buf << "\n";
       
         for (int i = 59; i >= 0; i--) {
           if (timeCode.code & (1LL << i)) {
-            print("1");
+            cout << "1\n";
           } else {
-            print("0");
+            cout << "0\n";
           }
         }
-        println("");
         currentPosition = 59;
         break;
     }
