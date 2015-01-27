@@ -8,16 +8,6 @@
 #define POWER_ON LOW
 #define POWER_OFF HIGH
 
-struct JJYDecoder::timeCode_t {
-  unsigned long long code:60;
-};
-
-enum JJYDecoder::JJYCODE{
-    JJYCODE_M, //Marker
-    JJYCODE_H, //High
-    JJYCODE_L //Low
-};
-
 long JJYDecoder::markerMin = 50, JJYDecoder::markerMax = 350;
 long JJYDecoder::highMin = 350, JJYDecoder::highMax = 650;
 long JJYDecoder::lowMin = 650, JJYDecoder::lowMax = 950;
