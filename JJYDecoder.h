@@ -35,7 +35,7 @@ private:
     static int sync;
     static struct timeCode_t timeCode;
 public:
-    void *intChange();
+    void intChange();
     JJYDecoder();
     ~JJYDecoder();
 };
