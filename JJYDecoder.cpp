@@ -16,6 +16,13 @@ int JJYDecoder::currentPosition = 59;
 int JJYDecoder::sync = 0;
 struct JJYDecoder::timeCode_t JJYDecoder::timeCode;
 
+template <typename T, void (T::*FUNC)()>
+void to_foo_callback(void* cb_arg)
+{
+  T* obj = reinterpret_cast<T*>(cb_arg);
+  (obj->*FUNC)();
+}
+
 JJYDecoder::JJYDecoder(){
     //init
     markerMin = 50;
@@ -36,7 +43,7 @@ JJYDecoder::JJYDecoder(){
     digitalWrite(pinF, F40KHZ);
     digitalWrite(pinP, POWER_ON);
 
-    wiringPiISR(pinTP, INT_EDGE_BOTH, &intChange);
+    wiringPiISR(pinTP, INT_EDGE_BOTH, to_foo_callback<JJYDecoder, &JJYDecoder::intChange>);
 }
 
 JJYDecoder::~JJYDecoder(){
