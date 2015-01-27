@@ -36,7 +36,7 @@ JJYDecoder::JJYDecoder(){
     digitalWrite(pinF, F40KHZ);
     digitalWrite(pinP, POWER_ON);
 
-    wiringPiISR(pinTP, INT_EDGE_BOTH, intChange);
+    wiringPiISR(pinTP, INT_EDGE_BOTH, &intChange);
 }
 
 JJYDecoder::~JJYDecoder(){
@@ -69,7 +69,7 @@ int JJYDecoder::getBits(unsigned char value) {
     return (value & 0x0f) + ((value >> 4) & 0x0f);
 }
 
-void *JJYDecoder::intChange() {
+void JJYDecoder::intChange() {
   char buf[128];
   JJYCODE currentCode;
   int interval;
@@ -93,7 +93,7 @@ void *JJYDecoder::intChange() {
   }
   
   sprintf(buf, "Value = %d, %c", interval, currentCode);
-  println(buf);
+  cout << buf << "\n";
   
   if (sync) {
     switch (currentCode) {
