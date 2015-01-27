@@ -40,6 +40,7 @@ public:
     void intChange();
     JJYDecoder();
     ~JJYDecoder();
+    void StaticEventCaller();
 };
 
 #endif
