@@ -34,8 +34,6 @@ private:
     static int currentPosition;
     static int sync;
     static struct timeCode_t timeCode;
-    //F*uckin C-style callbacks
-    static JJYDecoder DecoderSingleton;
 public:
     void intChange();
     JJYDecoder();
@@ -43,4 +41,5 @@ public:
     static void StaticEventCaller();
 };
 
+extern JJYDecoder *DecoderSingleton;
 #endif

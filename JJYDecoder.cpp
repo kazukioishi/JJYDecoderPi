@@ -12,7 +12,7 @@ int JJYDecoder::pinF = 3;
 int JJYDecoder::pinTP = 13;
 int JJYDecoder::pinP = 2;
 JJYDecoder::JJYCODE JJYDecoder::previousCode;
-JJYDecoder DecoderSingleton;
+JJYDecoder *DecoderSingleton;
 int JJYDecoder::currentPosition = 59;
 int JJYDecoder::sync = 0;
 struct JJYDecoder::timeCode_t JJYDecoder::timeCode;
@@ -72,7 +72,7 @@ int JJYDecoder::getBits(unsigned char value) {
 }
 
 void JJYDecoder::StaticEventCaller(){
-    DecoderSingleton.intChange();
+    DecoderSingleton->intChange();
 }
 
 void JJYDecoder::intChange() {
