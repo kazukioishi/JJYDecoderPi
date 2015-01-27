@@ -1,7 +1,6 @@
 #include <cstdio>
 #include <iostream>
 using namespace std;
-using namespace iostream;
 #include <signal.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -21,7 +20,7 @@ int main(int argc, char* argv[]){
         while(0){}
         return 0;
     }catch (char *str) {
-        println(str);
+        cout << str << "\n";
         return 1;
     }
 }
