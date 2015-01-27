@@ -17,9 +17,9 @@ int JJYDecoder::sync = 0;
 struct JJYDecoder::timeCode_t JJYDecoder::timeCode;
 
 template <typename T, void (T::*FUNC)()>
-void to_foo_callback(void* cb_arg)
+void to_foo_callback()
 {
-  T* obj = reinterpret_cast<T*>(cb_arg);
+  T* obj = reinterpret_cast<T*>();
   (obj->*FUNC)();
 }
 
