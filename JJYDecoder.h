@@ -14,7 +14,9 @@ private:
     static int pinF;
     static int pinTP;
     static int pinP;
-    struct timeCode_t{};
+    struct JJYDecoder::timeCode_t {
+        unsigned long long code:60;
+    };
     long timeHigh;
     long timeLow;
     int getMinute(long long code);
@@ -23,7 +25,11 @@ private:
     int getYear(long long code);
     int getDayOfWeek(long long code);
     int getBits(unsigned char value);
-    enum JJYCODE{};
+    enum JJYDecoder::JJYCODE{
+        JJYCODE_M, //Marker
+        JJYCODE_H, //High
+        JJYCODE_L //Low
+    };
     static JJYCODE previousCode;
     static int currentPosition;
     static int sync;
