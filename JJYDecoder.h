@@ -13,8 +13,8 @@ private:
     static int pinTP;
     static int pinP;
     struct timeCode_t{};
-    long timeHigh = 0;
-    long timeLow = 0;
+    long timeHigh;
+    long timeLow;
     int getMinute(long long code);
     int getHour(long long code);
     int getDay(long long code);

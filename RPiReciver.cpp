@@ -1,7 +1,11 @@
+#include <signal.h>
+#include <unistd.h>
+#include <stdlib.h>
 #include <stdio.h>
+#include <errno.h>
 #include "JJYDecoder.h"
 
-JJYDecoder *decoder
+JJYDecoder *decoder;
 
 void sig_handler(int signo){
     delete decoder;
