@@ -18,6 +18,9 @@ enum JJYDecoder::JJYCODE{
     JJYCODE_L //Low
 };
 
+long JJYDecoder::markerMin = 50, JJYDecoder::markerMax = 350;
+long JJYDecoder::highMin = 350, JJYDecoder::highMax = 650;
+long JJYDecoder::lowMin = 650, JJYDecoder::lowMax = 950;
 int JJYDecoder::pinF = 3;
 int JJYDecoder::pinTP = 13;
 int JJYDecoder::pinP = 2;

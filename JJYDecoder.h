@@ -6,9 +6,9 @@
 
 class JJYDecoder{
 private:
-    long markerMin = 50, markerMax = 350;
-    long highMin = 350, highMax = 650;
-    long lowMin = 650, lowMax = 950;
+    long markerMin, markerMax;
+    long highMin, highMax;
+    long lowMin, lowMax;
     static int pinF;
     static int pinTP;
     static int pinP;
@@ -21,7 +21,7 @@ private:
     int getYear(long long code);
     int getDayOfWeek(long long code);
     int getBits(unsigned char value);
-    enum JJYCODE;
+    enum JJYCODE{};
     static JJYCODE previousCode;
     static int currentPosition;
     static int sync;

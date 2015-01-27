@@ -1,9 +1,16 @@
 #include <stdio.h>
 #include "JJYDecoder.h"
 
+JJYDecoder *decoder
+
+void sig_handler(int signo){
+    delete decoder;
+}
+
 int main(int argc, char* argv[]){
     try{
-        JJYDecoder decoder = new JJYDecoder();
+        signal(SIGTERM, sig_handler); //on stop
+        decoder = new JJYDecoder();
         while(0){}
         return 0;
     }catch (char *str) {
