@@ -1,4 +1,4 @@
-#include "JJYDecoer.h"
+#include "JJYDecoder.h"
 
 #define HIGH 1
 #define LOW 0
