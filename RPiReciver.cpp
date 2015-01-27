@@ -15,8 +15,8 @@ void sig_handler(int signo){
 
 int main(int argc, char* argv[]){
     try{
-        //signal(SIGTERM, sig_handler); //on stop
-        decoder = new JJYDecoder();
+        signal(SIGTERM, sig_handler); //on stop
+        //decoder = new JJYDecoder();
         while(0){
             sleep(1);
         }
