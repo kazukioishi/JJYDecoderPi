@@ -16,13 +16,6 @@ int JJYDecoder::currentPosition = 59;
 int JJYDecoder::sync = 0;
 struct JJYDecoder::timeCode_t JJYDecoder::timeCode;
 
-template <typename T, void (T::*FUNC)()>
-void to_foo_callback()
-{
-  T* obj = reinterpret_cast<T*>();
-  (obj->*FUNC)();
-}
-
 JJYDecoder::JJYDecoder(){
     //init
     markerMin = 50;
@@ -31,6 +24,7 @@ JJYDecoder::JJYDecoder(){
     highMax = 650;
     lowMin = 650;
     lowMax = 950;
+    DecoderSingleton = this;
     //init GPIO
     if(wiringPiSetupGpio() == -1){
         throw "GPIO Initialize error.";
@@ -43,7 +37,7 @@ JJYDecoder::JJYDecoder(){
     digitalWrite(pinF, F40KHZ);
     digitalWrite(pinP, POWER_ON);
 
-    wiringPiISR(pinTP, INT_EDGE_BOTH, to_foo_callback<JJYDecoder, &JJYDecoder::intChange>);
+    wiringPiISR(pinTP, INT_EDGE_BOTH, &JJYDecoder::StaticEventCaller);
 }
 
 JJYDecoder::~JJYDecoder(){
@@ -74,6 +68,10 @@ int JJYDecoder::getBits(unsigned char value) {
     value = (value & 0x55) + ((value >> 1) & 0x55);
     value = (value & 0x33) + ((value >> 2) & 0x33);
     return (value & 0x0f) + ((value >> 4) & 0x0f);
+}
+
+void JJYDecoder::StaticEventCaller(){
+    DecoderSingleton->intChange();
 }
 
 void JJYDecoder::intChange() {
