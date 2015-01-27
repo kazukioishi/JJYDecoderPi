@@ -34,9 +34,10 @@ private:
     static int currentPosition;
     static int sync;
     static struct timeCode_t timeCode;
-
 public:
     void intChange();
+    JJYDecoder();
+    ~JJYDecoder();
 };
 
 #endif

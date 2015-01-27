@@ -8,30 +8,35 @@
 #define POWER_ON LOW
 #define POWER_OFF HIGH
 
-long JJYDecoder::markerMin = 50, JJYDecoder::markerMax = 350;
-long JJYDecoder::highMin = 350, JJYDecoder::highMax = 650;
-long JJYDecoder::lowMin = 650, JJYDecoder::lowMax = 950;
 int JJYDecoder::pinF = 3;
 int JJYDecoder::pinTP = 13;
 int JJYDecoder::pinP = 2;
-char JJYDecoder::previousCode = '\0';
+JJYCODE JJYDecoder::previousCode;
 int JJYDecoder::currentPosition = 59;
 int JJYDecoder::sync = 0;
 struct JJYDecoder::timeCode_t JJYDecoder::timeCode;
 
 JJYDecoder::JJYDecoder(){
-  if(wiringPiSetupGpio() == -1){
-    throw "GPIO Initialize error.";
-    return;
-  }
-  pinMode(pinF, OUTPUT);
-  pinMode(pinTP, INPUT);
-  pinMode(pinP, OUTPUT);
+    //init
+    markerMin = 50;
+    markerMax = 350;
+    highMin = 350;
+    highMax = 650;
+    lowMin = 650;
+    lowMax = 950;
+    //init GPIO
+    if(wiringPiSetupGpio() == -1){
+        throw "GPIO Initialize error.";
+        return;
+    }
+    pinMode(pinF, OUTPUT);
+    pinMode(pinTP, INPUT);
+    pinMode(pinP, OUTPUT);
 
-  digitalWrite(pinF, F40KHZ);
-  digitalWrite(pinP, POWER_ON);
+    digitalWrite(pinF, F40KHZ);
+    digitalWrite(pinP, POWER_ON);
 
-  wiringPiISR(pinTP, INT_EDGE_BOTH, intChange);
+    wiringPiISR(pinTP, INT_EDGE_BOTH, intChange);
 }
 
 JJYDecoder::~JJYDecoder(){
