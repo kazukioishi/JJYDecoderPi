@@ -17,7 +17,9 @@ int main(int argc, char* argv[]){
     try{
         signal(SIGTERM, sig_handler); //on stop
         decoder = new JJYDecoder();
-        while(0){}
+        while(0){
+            nanosleep(2)
+        }
         return 0;
     }catch (char *str) {
         cout << str << "\n";

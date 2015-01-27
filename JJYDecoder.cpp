@@ -12,7 +12,7 @@ int JJYDecoder::pinF = 3;
 int JJYDecoder::pinTP = 13;
 int JJYDecoder::pinP = 2;
 JJYDecoder::JJYCODE JJYDecoder::previousCode;
-JJYDecoder DecoderSingleton;
+JJYDecoder *DecoderSingleton;
 int JJYDecoder::currentPosition = 59;
 int JJYDecoder::sync = 0;
 struct JJYDecoder::timeCode_t JJYDecoder::timeCode;
@@ -25,7 +25,7 @@ JJYDecoder::JJYDecoder(){
     highMax = 650;
     lowMin = 650;
     lowMax = 950;
-    DecoderSingleton = *this;
+    DecoderSingleton = this;
     //init GPIO
     if(wiringPiSetupGpio() == -1){
         throw "GPIO Initialize error.";

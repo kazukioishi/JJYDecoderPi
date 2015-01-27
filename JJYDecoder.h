@@ -41,5 +41,5 @@ public:
     static void StaticEventCaller();
 };
 
-extern JJYDecoder DecoderSingleton;
+extern JJYDecoder *DecoderSingleton;
 #endif
