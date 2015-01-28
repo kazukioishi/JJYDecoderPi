@@ -10,6 +10,7 @@ using namespace std;
 JJYDecoder *decoder;
 
 void sig_handler(int signo){
+    cout << "ABORTING..." << "\n";
     delete decoder;
 }
 

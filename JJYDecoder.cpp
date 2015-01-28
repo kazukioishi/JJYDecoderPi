@@ -73,7 +73,9 @@ int JJYDecoder::getBits(unsigned char value) {
 }
 
 void JJYDecoder::StaticEventCaller(){
-    DecoderSingleton->intChange();
+    if(DecoderSingleton != NULL){
+        DecoderSingleton->intChange();
+    }
 }
 
 void JJYDecoder::intChange() {
