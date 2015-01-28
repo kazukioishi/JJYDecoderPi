@@ -17,8 +17,8 @@ int main(int argc, char* argv[]){
     try{
         signal(SIGTERM, sig_handler); //on stop
         decoder = new JJYDecoder();
-        while(0){
-            sleep(1);
+        while(true){
+            //sleep(1);
         }
         return 0;
     }catch (char *str) {
