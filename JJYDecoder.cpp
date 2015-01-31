@@ -8,14 +8,15 @@
 #define POWER_ON LOW
 #define POWER_OFF HIGH
 
-int JJYDecoder::pinF = 3;
-int JJYDecoder::pinTP = 13;
-int JJYDecoder::pinP = 2;
+int JJYDecoder::pinF = 17;
+int JJYDecoder::pinTP = 27;
+int JJYDecoder::pinP = 22;
 JJYDecoder::JJYCODE JJYDecoder::previousCode;
 JJYDecoder *DecoderSingleton;
 int JJYDecoder::currentPosition = 59;
 int JJYDecoder::sync = 0;
 struct JJYDecoder::timeCode_t JJYDecoder::timeCode;
+int JJYDecoder::LastHighLow = 3;
 
 JJYDecoder::JJYDecoder(){
     //init
@@ -33,7 +34,9 @@ JJYDecoder::JJYDecoder(){
     }
     pinMode(pinF, OUTPUT);
     pinMode(pinTP, INPUT);
+    //pullUpDnControl(pinTP, PUD_DOWN);
     pinMode(pinP, OUTPUT);
+    pinMode(4, OUTPUT);
 
     digitalWrite(pinF, F40KHZ);
     digitalWrite(pinP, POWER_ON);
@@ -78,17 +81,42 @@ void JJYDecoder::StaticEventCaller(){
     }
 }
 
+char* JJYDecoder::getS(JJYCODE c){
+  if(c == JJYCODE_M){
+     return "M";
+  }else if(c == JJYCODE_H){
+     return "H";
+  }else if(c == JJYCODE_L){
+     return "L";
+  }
+  return "";
+}
+
 void JJYDecoder::intChange() {
+  //cout << "Change Ivent.\n";
   char buf[128];
   JJYCODE currentCode;
   int interval;
   
   switch (digitalRead(pinTP)) {
     case HIGH:
-      timeHigh = clock();
+      digitalWrite(4,HIGH);
+      if(LastHighLow == HIGH){
+        //return;
+      }
+      //cout << "HIGH\n";
+      timeHigh = millis();
+      LastHighLow = HIGH;
       return;
     case LOW:
-      interval = clock() - timeHigh;
+      digitalWrite(4,LOW);
+      if(LastHighLow == LOW){
+        //return;
+      }
+      interval = millis() - timeHigh;
+      //cout << "LOW\n";
+      //cout << "interval:" << interval << "msec.\n";
+      LastHighLow = LOW;
       if (markerMin < interval && interval <= markerMax) {   // Marker
         currentCode = JJYCODE_M;
       } else if (highMin < interval && interval <= highMax) {  // HIGH
@@ -101,8 +129,8 @@ void JJYDecoder::intChange() {
       break;
   }
   
-  sprintf(buf, "Value = %d, %c", interval, currentCode);
-  cout << buf << "\n";
+  //sprintf(buf, "Value = %d, %c", interval, getS(currentCode));
+  cout << "Value=" << interval << "," << getS(currentCode) << "\n";
   
   if (sync) {
     switch (currentCode) {

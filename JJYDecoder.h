@@ -30,10 +30,12 @@ private:
         JJYCODE_H, //High
         JJYCODE_L //Low
     };
+    char* getS(JJYCODE c);
     static JJYCODE previousCode;
     static int currentPosition;
     static int sync;
     static struct timeCode_t timeCode;
+    static int LastHighLow;
 public:
     void intChange();
     JJYDecoder();
