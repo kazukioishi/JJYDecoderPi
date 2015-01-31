@@ -177,8 +177,8 @@ void JJYDecoder::intChange() {
         break;
       */
       case 0:
-        sprintf(buf, "%02d:%02d, %03ddays, %2dyear, %1d Day of wees", 
-          getHour(timeCode.code), getMinute(timeCode.code), getDay(timeCode.code), getYear(timeCode.code), getDayOfWeek(timeCode.code));
+        //sprintf(buf, "%02d:%02d, %03ddays, %2dyear, %1d Day of wees", 
+        //  getHour(timeCode.code), getMinute(timeCode.code), getDay(timeCode.code), getYear(timeCode.code), getDayOfWeek(timeCode.code));
         cout << getHour(timeCode.code) << ":" << getMinute(timeCode.code) << "\n";
         cout << "Day:" << getDay(timeCode.code) << ",Year:" << getYear(timeCode.code) << ",DayOfWeek:" << getDayOfWeek(timeCode.code) << "\n";
         for (int i = 59; i >= 0; i--) {
@@ -189,6 +189,7 @@ void JJYDecoder::intChange() {
           }
         }
         cout << "\n";
+        cout << timeCode.code << "\n";
         currentPosition = 60;
         break;
     }
@@ -196,7 +197,7 @@ void JJYDecoder::intChange() {
     if (previousCode == JJYCODE_M && currentCode == JJYCODE_M) {
       sync = true;
       currentPosition = 60;
-      timeCode.code = 60;
+      //timeCode.code = 60;
       cout << "Sync pos detect!\n";
     }
   }
