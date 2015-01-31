@@ -20,12 +20,15 @@ int JJYDecoder::LastHighLow = 3;
 
 JJYDecoder::JJYDecoder(){
     //init
-    markerMin = 50;
-    markerMax = 350;
-    highMin = 350;
-    highMax = 650;
-    lowMin = 650;
-    lowMax = 950;
+    //marker 200msec
+    markerMin = 100;
+    markerMax = 300;
+    //high 500msec
+    highMin = 400;
+    highMax = 600;
+    //low 800msec
+    lowMin = 700;
+    lowMax = 900;
     DecoderSingleton = this;
     //init GPIO
     if(wiringPiSetupGpio() == -1){
