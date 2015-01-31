@@ -22,7 +22,7 @@ JJYDecoder::JJYDecoder(){
     //init
     //marker 200msec
     markerMin = 100;
-    markerMax = 300;
+    markerMax = 350;
     //high 500msec
     highMin = 400;
     highMax = 600;
