@@ -122,7 +122,7 @@ void JJYDecoder::intChange() {
       } else if (lowMin < interval && interval <= lowMax) {    // LOW
         currentCode = JJYCODE_L;
       } else {
-        cout << "Unknown code:" << interval << "msec\n";.
+        cout << "Unknown code:" << interval << "msec\n";
         return;
       }
       break;
@@ -193,6 +193,7 @@ void JJYDecoder::intChange() {
     if (previousCode == JJYCODE_M && currentCode == JJYCODE_M) {
       sync = true;
       currentPosition = 59;
+      cout << "Sync pos detect!\n";
     }
   }
   previousCode = currentCode;
