@@ -122,6 +122,7 @@ void JJYDecoder::intChange() {
       } else if (lowMin < interval && interval <= lowMax) {    // LOW
         currentCode = JJYCODE_L;
       } else {
+        cout << "Unknown code:" << interval << "msec\n";.
         return;
       }
       break;
@@ -155,21 +156,21 @@ void JJYDecoder::intChange() {
       case 56: case 50: case 49: case 46: case 40: case 39: 
       case 36: case 26: case 25: case 5: case 4: case 3: case 2:
         if (currentCode != JJYCODE_L) {
-          cout << "Fixed 0 Error";
+          cout << "Fixed 0 Error\n";
           sync = false;
         }
         break;
       // Parity of hour
       case 24:
         if (((getBits(timeCode.code >> 42) & 0xff) % 2) != ((timeCode.code >> 24) & 1)) {
-          cout << "Hour Parity Error";
+          cout << "Hour Parity Error\n";
           sync = false;
         }
         break;
       // Parity of minute
       case 23:
         if (((getBits(timeCode.code >> 52) & 0xff) % 2) != ((timeCode.code >> 23) & 1)) {
-          cout << "Minute Parity Error";
+          cout << "Minute Parity Error\n";
           sync = false;
         }
         break;
@@ -179,11 +180,12 @@ void JJYDecoder::intChange() {
         cout << buf << "\n";
         for (int i = 59; i >= 0; i--) {
           if (timeCode.code & (1LL << i)) {
-            cout << "1\n";
+            cout << "1";
           } else {
-            cout << "0\n";
+            cout << "0";
           }
         }
+        cout << "\n";
         currentPosition = 59;
         break;
     }
