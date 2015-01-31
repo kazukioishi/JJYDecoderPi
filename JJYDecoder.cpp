@@ -101,11 +101,13 @@ void JJYDecoder::intChange() {
   switch (digitalRead(pinTP)) {
     case HIGH:
       digitalWrite(4,HIGH);
+      if(LastHighLow == HIGH) return;
       timeHigh = millis();
       LastHighLow = HIGH;
       return;
     case LOW:
       digitalWrite(4,LOW);
+      if(LastHighLow == LOW) return;
       interval = millis() - timeHigh;
       //cout << "LOW\n";
       //cout << "interval:" << interval << "msec.\n";
@@ -135,7 +137,9 @@ void JJYDecoder::intChange() {
         timeCode.code |= 1LL << currentPosition;
         break;
     }
+
     currentPosition--;//-1
+
     switch (currentPosition) {
       // Position Marker
       case 51: case 41: case 31: case 21: case 11: case 1:
