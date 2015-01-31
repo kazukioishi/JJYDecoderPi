@@ -33,7 +33,7 @@ private:
     char* getS(JJYCODE c);
     static JJYCODE previousCode;
     static int currentPosition;
-    static int sync;
+    static bool sync;
     static struct timeCode_t timeCode;
     static int LastHighLow;
 public:

@@ -101,18 +101,11 @@ void JJYDecoder::intChange() {
   switch (digitalRead(pinTP)) {
     case HIGH:
       digitalWrite(4,HIGH);
-      if(LastHighLow == HIGH){
-        //return;
-      }
-      //cout << "HIGH\n";
       timeHigh = millis();
       LastHighLow = HIGH;
       return;
     case LOW:
       digitalWrite(4,LOW);
-      if(LastHighLow == LOW){
-        //return;
-      }
       interval = millis() - timeHigh;
       //cout << "LOW\n";
       //cout << "interval:" << interval << "msec.\n";
@@ -142,13 +135,13 @@ void JJYDecoder::intChange() {
         timeCode.code |= 1LL << currentPosition;
         break;
     }
-    
-    switch (currentPosition--) {
+    currentPosition--;//-1
+    switch (currentPosition) {
       // Position Marker
       case 51: case 41: case 31: case 21: case 11: case 1:
         if (currentCode != JJYCODE_M) {
           cout << "Position Marker Error\n";
-          sync = 0;
+          sync = false;
         }
         break;
       // Fixed to 0
@@ -156,28 +149,27 @@ void JJYDecoder::intChange() {
       case 36: case 26: case 25: case 5: case 4: case 3: case 2:
         if (currentCode != JJYCODE_L) {
           cout << "Fixed 0 Error";
-          sync = 0;
+          sync = false;
         }
         break;
       // Parity of hour
       case 24:
         if (((getBits(timeCode.code >> 42) & 0xff) % 2) != ((timeCode.code >> 24) & 1)) {
           cout << "Hour Parity Error";
-          sync = 0;
+          sync = false;
         }
         break;
       // Parity of minute
       case 23:
         if (((getBits(timeCode.code >> 52) & 0xff) % 2) != ((timeCode.code >> 23) & 1)) {
           cout << "Minute Parity Error";
-          sync = 0;
+          sync = false;
         }
         break;
       case 0:
         sprintf(buf, "%02d:%02d, %03ddays, %2dyear, %1d Day of wees", 
           getHour(timeCode.code), getMinute(timeCode.code), getDay(timeCode.code), getYear(timeCode.code), getDayOfWeek(timeCode.code));
         cout << buf << "\n";
-      
         for (int i = 59; i >= 0; i--) {
           if (timeCode.code & (1LL << i)) {
             cout << "1\n";
@@ -190,7 +182,7 @@ void JJYDecoder::intChange() {
     }
   } else {
     if (previousCode == JJYCODE_M && currentCode == JJYCODE_M) {
-      sync = 1;
+      sync = true;
       currentPosition = 59;
     }
   }
