@@ -25,10 +25,10 @@ JJYDecoder::JJYDecoder(){
     markerMax = 350;
     //high 500msec
     highMin = 400;
-    highMax = 600;
+    highMax = 610;
     //low 800msec
     lowMin = 700;
-    lowMax = 900;
+    lowMax = 910;
     DecoderSingleton = this;
     //init GPIO
     if(wiringPiSetupGpio() == -1){
@@ -161,19 +161,21 @@ void JJYDecoder::intChange() {
         }
         break;
       // Parity of hour
-      case 24:
+      /*case 24:
         if (((getBits(timeCode.code >> 42) & 0xff) % 2) != ((timeCode.code >> 24) & 1)) {
           cout << "Hour Parity Error\n";
           sync = false;
         }
-        break;
+        break;*/
       // Parity of minute
+      /*
       case 23:
         if (((getBits(timeCode.code >> 52) & 0xff) % 2) != ((timeCode.code >> 23) & 1)) {
           cout << "Minute Parity Error\n";
           sync = false;
         }
         break;
+      */
       case 0:
         sprintf(buf, "%02d:%02d, %03ddays, %2dyear, %1d Day of wees", 
           getHour(timeCode.code), getMinute(timeCode.code), getDay(timeCode.code), getYear(timeCode.code), getDayOfWeek(timeCode.code));
