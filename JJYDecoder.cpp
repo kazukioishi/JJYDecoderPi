@@ -186,13 +186,14 @@ void JJYDecoder::intChange() {
           }
         }
         cout << "\n";
-        currentPosition = 59;
+        currentPosition = 60;
         break;
     }
   } else {
     if (previousCode == JJYCODE_M && currentCode == JJYCODE_M) {
       sync = true;
-      currentPosition = 59;
+      currentPosition = 60;
+      timeCode.code = 60;
       cout << "Sync pos detect!\n";
     }
   }
