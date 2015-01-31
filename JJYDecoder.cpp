@@ -14,7 +14,7 @@ int JJYDecoder::pinP = 22;
 JJYDecoder::JJYCODE JJYDecoder::previousCode;
 JJYDecoder *DecoderSingleton;
 int JJYDecoder::currentPosition = 59;
-int JJYDecoder::sync = 0;
+bool JJYDecoder::sync = false;
 struct JJYDecoder::timeCode_t JJYDecoder::timeCode;
 int JJYDecoder::LastHighLow = 3;
 
