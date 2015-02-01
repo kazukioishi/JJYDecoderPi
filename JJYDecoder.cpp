@@ -52,23 +52,23 @@ JJYDecoder::~JJYDecoder(){
 
 }
 
-int JJYDecoder::getMinute(long long code) {
+int JJYDecoder::getMinute(long code) {
  return ((code >> 57) & 0b111) * 10 + ((code >> 52) & 0b1111);
 }
 
-int JJYDecoder::getHour(long long code) {
+int JJYDecoder::getHour(long code) {
  return ((code >> 47) & 0b1111) * 10 + ((code >> 42) & 0b1111);
 }
 
-int JJYDecoder::getDay(long long code) {
+int JJYDecoder::getDay(long code) {
   return ((code >> 37) & 0b11) * 100 + ((code >> 32) & 0b1111) * 10 + ((code >> 27) & 0b1111);
 }
 
-int JJYDecoder::getYear(long long code) {
+int JJYDecoder::getYear(long code) {
   return ((code >> 16) & 0b1111) * 10 + ((code >> 12) & 0b1111);
 }
 
-int JJYDecoder::getDayOfWeek(long long code) {
+int JJYDecoder::getDayOfWeek(long code) {
   return ((code >> 8) & 0b111);
 }
 
@@ -135,10 +135,10 @@ void JJYDecoder::intChange() {
     switch (currentCode) {
       case JJYCODE_M:
       case JJYCODE_L:
-        timeCode.code &= ~(1LL << currentPosition);
+        timeCode.code &= ~(1L << currentPosition);
         break;
       case JJYCODE_H:
-        timeCode.code |= 1LL << currentPosition;
+        timeCode.code |= 1L << currentPosition;
         break;
     }
 

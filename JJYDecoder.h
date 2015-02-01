@@ -15,15 +15,15 @@ private:
     static int pinTP;
     static int pinP;
     struct timeCode_t {
-        unsigned long long code : 60;
+        unsigned long code : 60;
     } _timeCode_t;
     long timeHigh;
     long timeLow;
-    int getMinute(long long code);
-    int getHour(long long code);
-    int getDay(long long code);
-    int getYear(long long code);
-    int getDayOfWeek(long long code);
+    int getMinute(long code);
+    int getHour(long code);
+    int getDay(long code);
+    int getYear(long code);
+    int getDayOfWeek(long code);
     int getBits(unsigned char value);
     enum JJYCODE{
         JJYCODE_M, //Marker
