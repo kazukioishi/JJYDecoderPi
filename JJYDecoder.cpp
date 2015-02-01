@@ -172,28 +172,28 @@ void JJYDecoder::intChange() {
           cout << "Hour Parity Error\n";
           sync = false;
         }
-		    else{
-			    //get hour
-			    cout << "Hour:" << getHour(timeCode.code) << "\n";
-		    }
+        else{
+          //get hour
+          cout << "Hour:" << getHour(timeCode.code) << "\n";
+        }
         break;
       // Parity of minute
       case 23:
         if (((getBits(timeCode.code >> 52) & 0xff) % 2) != ((timeCode.code >> 23) & 1)) {
           cout << "Minute Parity Error\n";
           sync = false;
-		    }
-		    else{
-			    //get min
-			    cout << "Min:" << getMinute(timeCode.code) << "\n";
-		    }
+        }
+        else{
+          //get min
+          cout << "Min:" << getMinute(timeCode.code) << "\n";
+        }
         break;
       case 0:
         //sprintf(buf, "%02d:%02d, %03ddays, %2dyear, %1d Day of wees",
         //  getHour(timeCode.code), getMinute(timeCode.code), getDay(timeCode.code), getYear(timeCode.code), getDayOfWeek(timeCode.code));
-		    if (sync == false || error == true){
+        if (sync == false || error == true){
           cout << "\x1b[31m" << "[ALERT] DATA INCORRECT!! ONLY THE TIME IS CORRECT!!" << "\x1b[0m" << "\n";
-		    }
+        }
         cout << getHour(timeCode.code) << ":" << getMinute(timeCode.code) << "\n";
         cout << "Day:" << getDay(timeCode.code) << ",Year:" << getYear(timeCode.code) << ",DayOfWeek:" << getDayOfWeek(timeCode.code) << "\n";
         for (int i = 59; i >= 0; i--) {
@@ -212,13 +212,14 @@ void JJYDecoder::intChange() {
         break;
     }
   }
-  //連続で強制的にpositionを戻す
-  if (previousCode == JJYCODE_M && currentCode == JJYCODE_M) {
-    sync = true;
-    error = false;
-    currentPosition = 60;
-    timeCode.code = 0;
-    cout << "Sync pos detect!\n";
+  else{
+      if (previousCode == JJYCODE_M && currentCode == JJYCODE_M) {
+          sync = true;
+          error = false;
+          currentPosition = 60;
+          timeCode.code = 0;
+          cout << "Sync pos detect!\n";
+      }
   }
   previousCode = currentCode;
 }
