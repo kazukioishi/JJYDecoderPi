@@ -21,14 +21,14 @@ int JJYDecoder::LastHighLow = 3;
 JJYDecoder::JJYDecoder(){
     //init
     //marker 200msec
-    markerMin = 100;
+    markerMin = 50;
     markerMax = 350;
     //high 500msec
-    highMin = 400;
-    highMax = 610;
+    highMin = 350;
+    highMax = 650;
     //low 800msec
-    lowMin = 700;
-    lowMax = 910;
+    lowMin = 650;
+    lowMax = 950;
     DecoderSingleton = this;
     //init GPIO
     if(wiringPiSetupGpio() == -1){
@@ -103,14 +103,16 @@ void JJYDecoder::intChange() {
   
   switch (digitalRead(pinTP)) {
     case HIGH:
+      //digitalWrite(4,HIGH);
+      //if(LastHighLow == HIGH) return;
       digitalWrite(4,HIGH);
-      if(LastHighLow == HIGH) return;
       timeHigh = millis();
       LastHighLow = HIGH;
       return;
     case LOW:
+      //digitalWrite(4,LOW);
+      //if(LastHighLow == LOW) return;
       digitalWrite(4,LOW);
-      if(LastHighLow == LOW) return;
       interval = millis() - timeHigh;
       //cout << "LOW\n";
       //cout << "interval:" << interval << "msec.\n";
