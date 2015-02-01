@@ -189,7 +189,7 @@ void JJYDecoder::intChange() {
         //sprintf(buf, "%02d:%02d, %03ddays, %2dyear, %1d Day of wees", 
         //  getHour(timeCode.code), getMinute(timeCode.code), getDay(timeCode.code), getYear(timeCode.code), getDayOfWeek(timeCode.code));
 		if (sync == false){
-			cout << "\x1b[31m" << "[ALERT] DATA INCORRECT!! ONLY THE TIME IS CORRECT!!" << "\x1b[0m" << "\n"
+			cout << "\x1b[31m" << "[ALERT] DATA INCORRECT!! ONLY THE TIME IS CORRECT!!" << "\x1b[0m" << "\n";
 		}
         cout << getHour(timeCode.code) << ":" << getMinute(timeCode.code) << "\n";
         cout << "Day:" << getDay(timeCode.code) << ",Year:" << getYear(timeCode.code) << ",DayOfWeek:" << getDayOfWeek(timeCode.code) << "\n";
