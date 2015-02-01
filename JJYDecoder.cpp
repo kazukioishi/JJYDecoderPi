@@ -57,7 +57,7 @@ int JJYDecoder::getMinute(long long code) {
 }
 
 int JJYDecoder::getHour(long long code) {
- return ((code >> 47) & 0B1111) * 10 + ((code >> 42) & 0B1111);
+ return (((code >> 47) & 0B1111)) * 10 + ((code >> 42) & 0B1111);
 }
 
 int JJYDecoder::getDay(long long code) {
@@ -132,6 +132,7 @@ void JJYDecoder::intChange() {
   cout << "Value=" << interval << "," << getS(currentCode) << "\n";
   
   if (sync) {
+    currentPosition--;
     switch (currentCode) {
       case JJYCODE_M:
       case JJYCODE_L:
@@ -142,7 +143,7 @@ void JJYDecoder::intChange() {
         break;
     }
 
-    currentPosition--;//-1
+    //currentPosition--;//-1
 
     switch (currentPosition) {
       // Position Marker
@@ -161,21 +162,19 @@ void JJYDecoder::intChange() {
         }
         break;
       // Parity of hour
-      /*case 24:
+      case 24:
         if (((getBits(timeCode.code >> 42) & 0xff) % 2) != ((timeCode.code >> 24) & 1)) {
           cout << "Hour Parity Error\n";
           sync = false;
         }
-        break;*/
+        break;
       // Parity of minute
-      /*
       case 23:
         if (((getBits(timeCode.code >> 52) & 0xff) % 2) != ((timeCode.code >> 23) & 1)) {
           cout << "Minute Parity Error\n";
           sync = false;
         }
         break;
-      */
       case 0:
         //sprintf(buf, "%02d:%02d, %03ddays, %2dyear, %1d Day of wees", 
         //  getHour(timeCode.code), getMinute(timeCode.code), getDay(timeCode.code), getYear(timeCode.code), getDayOfWeek(timeCode.code));
@@ -191,13 +190,14 @@ void JJYDecoder::intChange() {
         cout << "\n";
         cout << timeCode.code << "\n";
         currentPosition = 60;
+        timeCode.code = 0;
         break;
     }
   } else {
     if (previousCode == JJYCODE_M && currentCode == JJYCODE_M) {
       sync = true;
       currentPosition = 60;
-      //timeCode.code = 60;
+      timeCode.code = 0;
       cout << "Sync pos detect!\n";
     }
   }
