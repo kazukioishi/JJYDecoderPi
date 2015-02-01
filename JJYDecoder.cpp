@@ -52,23 +52,23 @@ JJYDecoder::~JJYDecoder(){
 
 }
 
-int JJYDecoder::getMinute(long code) {
+int JJYDecoder::getMinute(long long code) {
  return ((code >> 57) & 0b111) * 10 + ((code >> 52) & 0b1111);
 }
 
-int JJYDecoder::getHour(long code) {
+int JJYDecoder::getHour(long long code) {
  return ((code >> 47) & 0b1111) * 10 + ((code >> 42) & 0b1111);
 }
 
-int JJYDecoder::getDay(long code) {
+int JJYDecoder::getDay(long long code) {
   return ((code >> 37) & 0b11) * 100 + ((code >> 32) & 0b1111) * 10 + ((code >> 27) & 0b1111);
 }
 
-int JJYDecoder::getYear(long code) {
+int JJYDecoder::getYear(long long code) {
   return ((code >> 16) & 0b1111) * 10 + ((code >> 12) & 0b1111);
 }
 
-int JJYDecoder::getDayOfWeek(long code) {
+int JJYDecoder::getDayOfWeek(long long code) {
   return ((code >> 8) & 0b111);
 }
 
