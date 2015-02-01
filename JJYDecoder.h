@@ -34,6 +34,7 @@ private:
     static JJYCODE previousCode;
     static int currentPosition;
     static bool sync;
+    static bool error;
     static struct timeCode_t timeCode;
     static int LastHighLow;
 public:
