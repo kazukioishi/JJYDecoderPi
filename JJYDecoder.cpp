@@ -15,6 +15,7 @@ JJYDecoder::JJYCODE JJYDecoder::previousCode;
 JJYDecoder *DecoderSingleton;
 int JJYDecoder::currentPosition = 59;
 bool JJYDecoder::sync = false;
+bool JJYDecoder::error = false;
 struct JJYDecoder::timeCode_t JJYDecoder::timeCode;
 int JJYDecoder::LastHighLow = 3;
 
@@ -190,7 +191,7 @@ void JJYDecoder::intChange() {
       case 0:
         //sprintf(buf, "%02d:%02d, %03ddays, %2dyear, %1d Day of wees",
         //  getHour(timeCode.code), getMinute(timeCode.code), getDay(timeCode.code), getYear(timeCode.code), getDayOfWeek(timeCode.code));
-		    if (sync == false || error = true){
+		    if (sync == false || error == true){
           cout << "\x1b[31m" << "[ALERT] DATA INCORRECT!! ONLY THE TIME IS CORRECT!!" << "\x1b[0m" << "\n";
 		    }
         cout << getHour(timeCode.code) << ":" << getMinute(timeCode.code) << "\n";
@@ -214,7 +215,7 @@ void JJYDecoder::intChange() {
   //連続で強制的にpositionを戻す
   if (previousCode == JJYCODE_M && currentCode == JJYCODE_M) {
     sync = true;
-    erro = false;
+    error = false;
     currentPosition = 60;
     timeCode.code = 0;
     cout << "Sync pos detect!\n";
