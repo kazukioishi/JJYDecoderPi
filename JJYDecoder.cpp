@@ -151,16 +151,16 @@ void JJYDecoder::intChange() {
       // Position Marker
       case 51: case 41: case 31: case 21: case 11: case 1:
         if (currentCode != JJYCODE_M) {
-          cout << "Position Marker Error\n";
-          sync = false;
+          cout << "Position Marker Error(Decoding anyway)\n";
+          //sync = false;
         }
         break;
       // Fixed to 0
       case 56: case 50: case 49: case 46: case 40: case 39: 
       case 36: case 26: case 25: case 5: case 4: case 3: case 2:
         if (currentCode != JJYCODE_L) {
-          cout << "Fixed 0 Error\n";
-          sync = false;
+          cout << "Fixed 0 Error(Decoding anyway)\n";
+          //sync = false;
         }
         break;
       // Parity of hour
@@ -168,18 +168,29 @@ void JJYDecoder::intChange() {
         if (((getBits(timeCode.code >> 42) & 0xff) % 2) != ((timeCode.code >> 24) & 1)) {
           cout << "Hour Parity Error\n";
           sync = false;
-        }
+		}
+		else{
+			//この段階で何時か知ることはできる！
+			cout << "Hour:" << getHour(timeCode.code) << "\n";
+		}
         break;
       // Parity of minute
       case 23:
         if (((getBits(timeCode.code >> 52) & 0xff) % 2) != ((timeCode.code >> 23) & 1)) {
           cout << "Minute Parity Error\n";
           sync = false;
-        }
+		}
+		else{
+			//この段階で何分か知ることはできる！
+			cout << "Min:" << getMinute(timeCode.code) << "\n";
+		}
         break;
       case 0:
         //sprintf(buf, "%02d:%02d, %03ddays, %2dyear, %1d Day of wees", 
         //  getHour(timeCode.code), getMinute(timeCode.code), getDay(timeCode.code), getYear(timeCode.code), getDayOfWeek(timeCode.code));
+		if (sync == false){
+			cout << "\x1b[31m" << "[ALERT] DATA INCORRECT!! ONLY THE TIME IS CORRECT!!" << "\x1b[0m" << "\n"
+		}
         cout << getHour(timeCode.code) << ":" << getMinute(timeCode.code) << "\n";
         cout << "Day:" << getDay(timeCode.code) << ",Year:" << getYear(timeCode.code) << ",DayOfWeek:" << getDayOfWeek(timeCode.code) << "\n";
         for (int i = 59; i >= 0; i--) {
