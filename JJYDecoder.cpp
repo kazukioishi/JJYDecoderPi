@@ -134,15 +134,11 @@ void JJYDecoder::intChange() {
   if (sync) {
     switch (currentCode) {
       case JJYCODE_M:
-        timeCode.code = timeCode.code << 1;
-        timeCode.code += 0;
       case JJYCODE_L:
-        timeCode.code = timeCode.code << 1;
-        timeCode.code += 0;
+        timeCode.code &= ~(1LL << currentPosition);
         break;
       case JJYCODE_H:
-        timeCode.code = timeCode.code << 1;
-        timeCode.code += 1;
+        timeCode.code |= 1LL << currentPosition;
         break;
     }
 
