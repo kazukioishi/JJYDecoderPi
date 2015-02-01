@@ -212,14 +212,12 @@ void JJYDecoder::intChange() {
         break;
     }
   }
-  else{
-      if (previousCode == JJYCODE_M && currentCode == JJYCODE_M) {
-          sync = true;
-          error = false;
-          currentPosition = 60;
-          timeCode.code = 0;
-          cout << "Sync pos detect!\n";
-      }
+  if (previousCode == JJYCODE_M && currentCode == JJYCODE_M) {
+      sync = true;
+      error = false;
+      currentPosition = 60;
+      timeCode.code = 0;
+      cout << "Sync pos detect!\n";
   }
   previousCode = currentCode;
 }
