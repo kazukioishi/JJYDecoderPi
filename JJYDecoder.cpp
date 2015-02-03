@@ -22,14 +22,14 @@ int JJYDecoder::LastHighLow = 3;
 JJYDecoder::JJYDecoder(){
     //init
     //marker 200msec
-    markerMin = 50;
-    markerMax = 350;
+    markerMin = 150;
+    markerMax = 300;
     //high 500msec
-    highMin = 350;
-    highMax = 650;
+    highMin = 300;
+    highMax = 550;
     //low 800msec
-    lowMin = 650;
-    lowMax = 950;
+    lowMin = 700;
+    lowMax = 890;
     DecoderSingleton = this;
     //init GPIO
     if(wiringPiSetupGpio() == -1){
@@ -105,14 +105,14 @@ void JJYDecoder::intChange() {
   switch (digitalRead(pinTP)) {
     case HIGH:
       //digitalWrite(4,HIGH);
-      //if(LastHighLow == HIGH) return;
+      if(LastHighLow == HIGH) return;
       digitalWrite(4,HIGH);
       timeHigh = millis();
       LastHighLow = HIGH;
       return;
     case LOW:
       //digitalWrite(4,LOW);
-      //if(LastHighLow == LOW) return;
+      if(LastHighLow == LOW) return;
       digitalWrite(4,LOW);
       interval = millis() - timeHigh;
       //cout << "LOW\n";
@@ -135,6 +135,12 @@ void JJYDecoder::intChange() {
   cout << "Value=" << interval << "," << getS(currentCode) << "\n";
 
   if (sync) {
+    if (previousCode == JJYCODE_M && currentCode == JJYCODE_M && currentPosition != 1 && currentPosition != 60) {
+        //error marker dismiss
+        cout << "Error marker! dissmiss this marker\n";
+        return;
+    }
+
     currentPosition--;
     switch (currentCode) {
       case JJYCODE_M:
@@ -161,8 +167,8 @@ void JJYDecoder::intChange() {
       case 56: case 50: case 49: case 46: case 40: case 39:
       case 36: case 26: case 25: case 5: case 4: case 3: case 2:
         if (currentCode != JJYCODE_L) {
-          cout << "Fixed 0 Error(Decoding anyway)\n";
-          //sync = false;
+          cout << "Fixed 0 Error\n";
+          sync = false;
           error = true;
         }
         break;
@@ -212,12 +218,14 @@ void JJYDecoder::intChange() {
         break;
     }
   }
-  if (previousCode == JJYCODE_M && currentCode == JJYCODE_M) {
-      sync = true;
-      error = false;
-      currentPosition = 60;
-      timeCode.code = 0;
-      cout << "Sync pos detect!\n";
+  else{
+      if (previousCode == JJYCODE_M && currentCode == JJYCODE_M) {
+          sync = true;
+          error = false;
+          currentPosition = 60;
+          timeCode.code = 0;
+          cout << "Sync pos detect!\n";
+      }
   }
   previousCode = currentCode;
 }
