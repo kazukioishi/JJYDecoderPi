@@ -23,7 +23,7 @@ JJYDecoder::JJYDecoder(){
     //init
     //marker 200msec
     markerMin = 150;
-    markerMax = 300;
+    markerMax = 350;
     //high 500msec
     highMin = 300;
     highMax = 550;
@@ -40,7 +40,7 @@ JJYDecoder::JJYDecoder(){
     pinMode(pinTP, INPUT);
     //pullUpDnControl(pinTP, PUD_DOWN);
     pinMode(pinP, OUTPUT);
-    pinMode(4, OUTPUT);
+    //pinMode(4, OUTPUT);
 
     digitalWrite(pinF, F40KHZ);
     digitalWrite(pinP, POWER_ON);
@@ -104,15 +104,16 @@ void JJYDecoder::intChange() {
 
   switch (digitalRead(pinTP)) {
     case HIGH:
+      //cout << "HIGH\n";
       //digitalWrite(4,HIGH);
-      if(LastHighLow == HIGH) return;
+      //if(LastHighLow == HIGH) return;
       digitalWrite(4,HIGH);
       timeHigh = millis();
       LastHighLow = HIGH;
       return;
     case LOW:
       //digitalWrite(4,LOW);
-      if(LastHighLow == LOW) return;
+      //if(LastHighLow == LOW) return;
       digitalWrite(4,LOW);
       interval = millis() - timeHigh;
       //cout << "LOW\n";
