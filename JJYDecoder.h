@@ -1,5 +1,6 @@
 #include <cstdio>
 #include <iostream>
+#include <ctime>
 using namespace std;
 #include <wiringPi.h>
 
@@ -37,11 +38,13 @@ private:
     static bool error;
     static struct timeCode_t timeCode;
     static int LastHighLow;
+    struct std::tm ConvertToTM(int date,int year,int hour,int min);
 public:
     void intChange();
     JJYDecoder();
     ~JJYDecoder();
     static void StaticEventCaller();
+    void (*OnTimeRecive)(struct std::tm);
 };
 
 extern JJYDecoder *DecoderSingleton;

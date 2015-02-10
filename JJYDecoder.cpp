@@ -200,6 +200,11 @@ void JJYDecoder::intChange() {
         //  getHour(timeCode.code), getMinute(timeCode.code), getDay(timeCode.code), getYear(timeCode.code), getDayOfWeek(timeCode.code));
         if (sync == false || error == true){
           cout << "\x1b[31m" << "[ALERT] DATA INCORRECT!! ONLY THE TIME IS CORRECT!!" << "\x1b[0m" << "\n";
+        }else{
+            struct std::tm tmt = ConvertToTM(getDay(timeCode.code),getYear(timeCode.code),getHour(timeCode.code),getMinute(timeCode.code));
+            if(OnTimeRecive != NULL){
+                (*OnTimeRecive)(tmt);
+            }
         }
         cout << getHour(timeCode.code) << ":" << getMinute(timeCode.code) << "\n";
         cout << "Day:" << getDay(timeCode.code) << ",Year:" << getYear(timeCode.code) << ",DayOfWeek:" << getDayOfWeek(timeCode.code) << "\n";
@@ -229,4 +234,15 @@ void JJYDecoder::intChange() {
       }
   }
   previousCode = currentCode;
+}
+struct std::tm JJYDecoder::ConvertToTM(int date,int year,int hour,int min){
+    //Convert to std::tm
+    struct tm stm;
+    stm.tm_year = (2000 + year) - 1900;
+    stm.tm_hour = hour;
+    stm.tm_min = min;
+    stm.tm_yday = date;
+    //Convert!!
+    mktime(&stm);
+    return stm;
 }

@@ -1,5 +1,6 @@
 #include <cstdio>
 #include <iostream>
+#include <ctime>
 using namespace std;
 #include <signal.h>
 #include <unistd.h>
@@ -14,10 +15,17 @@ void sig_handler(int signo){
     delete decoder;
 }
 
+void TimeReciveCallback(struct std::tm stm){
+    char timechar[20];
+    strftime(timechar,20,"%Y-%m-%d %H:%M:%S",&stm);
+    cout << timechar << "\n";
+}
+
 int main(int argc, char* argv[]){
     try{
         signal(SIGTERM, sig_handler); //on stop
         decoder = new JJYDecoder();
+        decoder->OnTimeRecive = &TimeReciveCallback;
         while(true){
             //sleep(1);
         }
